@@ -32,17 +32,18 @@ else:
 def load_data():
     file_path = str(selected_file)
     chunks = []
-    for chunk in pd.read_csv(
-        file_path,
-        usecols=["icao24", "time", "lat", "lon", "velocity"],
-        chunksize=500_000
-    ):
+
+    for chunk in pd.read_csv(file_path, chunksize=500_000):
         chunk = chunk.rename(columns={
             "time": "timestamp",
             "lat": "latitude",
             "lon": "longitude"
         })
-        chunk = chunk.dropna()
+
+        if "icao24" not in chunk.columns or "velocity" not in chunk.columns:
+            raise ValueError("Dataset must contain 'icao24' and 'velocity' columns.")
+
+        chunk = chunk.dropna(subset=["icao24", "velocity", "latitude", "longitude", "timestamp"], how="any")
         chunk = chunk[(chunk["latitude"] != 0) & (chunk["longitude"] != 0)]
         chunk["timestamp"] = pd.to_datetime(chunk["timestamp"], unit="s")
         chunk = chunk.iloc[::5]
