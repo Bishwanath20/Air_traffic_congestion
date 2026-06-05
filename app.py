@@ -4,14 +4,24 @@ import plotly.graph_objects as go
 from pathlib import Path
 
 DATA_FILE = Path(__file__).resolve().parent / "data" / "processed" / "daily_merged" / "2019-01-14.csv"
+SAMPLE_FILE = Path(__file__).resolve().parent / "data" / "processed" / "daily_merged" / "2019-01-14-sample.csv"
 
 st.set_page_config(layout="wide", page_title="✈️ Flight Tracker")
 st.title("✈️ Flight Congestion")
 
-if not DATA_FILE.exists():
+if DATA_FILE.exists():
+    selected_file = DATA_FILE
+    st.info("Using full dataset `2019-01-14.csv` from the repository.")
+elif SAMPLE_FILE.exists():
+    selected_file = SAMPLE_FILE
+    st.warning(
+        "Using sample dataset `2019-01-14-sample.csv` because the full dataset is not in the repo. "
+        "For full results, add `data/processed/daily_merged/2019-01-14.csv` to the repository."
+    )
+else:
     st.error(
         "Dataset not found. Please add `data/processed/daily_merged/2019-01-14.csv` "
-        "to the repository before deploying this app."
+        "or the sample file `data/processed/daily_merged/2019-01-14-sample.csv` to the repository."
     )
     st.stop()
 
@@ -20,7 +30,7 @@ if not DATA_FILE.exists():
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 @st.cache_data
 def load_data():
-    file_path = str(DATA_FILE)
+    file_path = str(selected_file)
     chunks = []
     for chunk in pd.read_csv(
         file_path,

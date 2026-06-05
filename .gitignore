@@ -1,0 +1,12 @@
+# Ignore raw and processed datasets
+# Keep only the deployable sample CSV for Streamlit
+data/*
+!data/processed/
+data/processed/*
+!data/processed/daily_merged/
+data/processed/daily_merged/*
+!data/processed/daily_merged/2019-01-14-sample.csv
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
