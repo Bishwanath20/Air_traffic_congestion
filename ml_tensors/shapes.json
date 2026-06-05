@@ -1,0 +1,18 @@
+{
+    "num_samples": 216,
+    "time_steps": 6,
+    "input_shape": [
+        6,
+        720,
+        1440,
+        8,
+        1
+    ],
+    "output_shape": [
+        720,
+        1440,
+        8
+    ],
+    "dtype": "float32",
+    "storage": "memmap"
+}
