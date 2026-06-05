@@ -8,6 +8,13 @@ DATA_FILE = Path(__file__).resolve().parent / "data" / "processed" / "daily_merg
 st.set_page_config(layout="wide", page_title="✈️ Flight Tracker")
 st.title("✈️ Flight Congestion")
 
+if not DATA_FILE.exists():
+    st.error(
+        "Dataset not found. Please add `data/processed/daily_merged/2019-01-14.csv` "
+        "to the repository before deploying this app."
+    )
+    st.stop()
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # LOAD DATA — chunked, safe, cached
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
