@@ -85,7 +85,7 @@ streamlit run app.py
 ## Contributors
 
 - Bishwanath Patra
-- Vaddadi Aditya
+- Vaddadi Adithya
 
 **Guided by**: Dr. KVSN. Rama Rao
 
